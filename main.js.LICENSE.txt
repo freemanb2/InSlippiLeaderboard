@@ -192,7 +192,7 @@ and limitations under the License.
  */
 
 /** @license React v17.0.2
- * react-dom-server.node.production.min.js
+ * react-dom-server.browser.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
