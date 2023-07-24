@@ -1,18 +1,19 @@
-import { getPlayerDataThrottled } from './slippi'
+import { getPlayerDataThrottled } from './slippi';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
-import creds from '../secrets/creds.json';
-import * as syncFs from 'fs';
-import * as path from 'path';
-import util from 'util';
-import * as settings from '../settings'
-
+import { promises } from 'fs';
+import { normalize, join } from 'path';
+import { promisify } from 'util';
+import { spreadsheetID } from '../settings';
+import { S3, config } from 'aws-sdk';
 import { exec } from 'child_process';
-const fs = syncFs.promises;
-const execPromise = util.promisify(exec);
+
+const fs = promises;
+const execPromise = promisify(exec);
 
 const getPlayerConnectCodes = async (): Promise<string[]> => {
-  const doc = new GoogleSpreadsheet(settings.spreadsheetID);
-  await doc.useServiceAccountAuth(creds);
+  const doc = new GoogleSpreadsheet(spreadsheetID);
+  
+  await doc.useServiceAccountAuth(JSON.parse(process.env.GOOGLE_CREDS));
   await doc.loadInfo(); // loads document properties and worksheets
   const sheet = doc.sheetsByIndex[0];
   const rows = (await sheet.getRows()).slice(1); // remove header row
@@ -34,30 +35,75 @@ const getPlayers = async () => {
 
 async function main() {
   console.log('Starting player fetch.');
-  const players = await getPlayers();
+  var players = await getPlayers();
   if(!players.length) {
-    console.log('Error fetching player data. Terminating.')
-    return
+    console.log('Error fetching player data. Terminating.');
+    return;
   }
-  console.log('Player fetch complete.');
-  // rename original to players-old
-  const newFile = path.join(__dirname, 'data/players-new.json')
-  const oldFile = path.join(__dirname, 'data/players-old.json')
-  const timestamp = path.join(__dirname, 'data/timestamp.json')
 
-  await fs.rename(newFile, oldFile)
-  console.log('Renamed existing data file.');
-  await fs.writeFile(newFile, JSON.stringify(players));
-  await fs.writeFile(timestamp, JSON.stringify({updated: Date.now()}));
-  console.log('Wrote new data file and timestamp.');
-  const rootDir = path.normalize(path.join(__dirname, '..'))
-  console.log(rootDir)
-  // if no current git changes
-  const { stdout, stderr } = await execPromise(`git -C ${rootDir} status --porcelain`);
-  if(stdout || stderr) {
-    console.log('Pending git changes... aborting deploy');
-    return
+  config.update({ region: 'us-east-1'});
+  var s3 = new S3();
+
+  var newPlayers = Buffer.from(JSON.stringify(players));
+  players = undefined;
+  global.gc();
+
+  var newData = {
+    Bucket: process.env.S3_BUCKET,
+    Key: 'players-new.json',
+    Body: newPlayers,
+    ContentEncoding: 'base64',
+    ContentType: 'application/json'
+  };
+
+  await s3.upload(newData).promise();
+  const newFilePath = join(__dirname, 'data/players-new.json')
+  await fs.writeFile(newFilePath, newPlayers);
+
+  newPlayers = undefined;
+  global.gc();
+
+  var params = {
+    Bucket: process.env.S3_BUCKET,
+    Key: 'players-new.json'
+  };
+
+  const oldPlayerData = s3.getObject(params).promise();
+  var oldPlayers = JSON.stringify(JSON.parse((await oldPlayerData).Body.toString()));
+
+  var oldData = {
+    Bucket: process.env.S3_BUCKET,
+    Key: 'players-old.json',
+    Body: oldPlayers,
+    ContentEncoding: 'base64',
+    ContentType: 'application/json'
+  };
+
+  await s3.upload(oldData).promise();
+  const oldFilePath = join(__dirname, 'data/players-old.json');
+  await fs.writeFile(oldFilePath, oldPlayers);
+
+  oldPlayers = undefined;
+  global.gc();
+  
+  var timestampData = JSON.stringify({ updated: Date.now() });
+  var timestamp = {
+    Bucket: process.env.S3_BUCKET,
+    Key: 'timestamp.json',
+    Body: timestampData,
+    ContentEncoding: 'base64',
+    ContentType: 'application/json'
   }
+
+  await s3.upload(timestamp).promise();
+
+  const timestampPath = join(__dirname, 'data/timestamp.json')  
+  await fs.writeFile(timestampPath, timestampData);
+
+  timestamp = undefined;
+  global.gc();
+
+  const rootDir = normalize(join(__dirname, '..'))
   console.log('Deploying.');
   const { stdout: stdout2, stderr: stderr2 } = await execPromise(`npm run --prefix ${rootDir} deploy`);
   console.log(stdout2);
