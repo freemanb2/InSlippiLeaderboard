@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from '../../Table';
 import { Player } from '../../../lib/player'
 import playersOld from '../../../../cron/data/players-old.json';
@@ -7,7 +7,6 @@ import timestamp from '../../../../cron/data/timestamp.json';
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime' // import plugin
 import * as settings from '../../../../settings'
-import * as aws from 'aws-sdk'
 dayjs.extend(relativeTime)
 
 
@@ -28,6 +27,7 @@ const sortAndPopulatePlayers = (players: Player[]) => {
 }
 
 export default function HomePage() {
+
   const rankedPlayersOld = sortAndPopulatePlayers(playersOld)
   const oldPlayersMap = new Map(
     rankedPlayersOld.map((p) => [p.connectCode.code, p]));

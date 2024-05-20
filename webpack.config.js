@@ -50,17 +50,6 @@ module.exports = {
   resolve: {
     modules: [path.join(__dirname, './node_modules')],
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    fallback: {
-      "fs": false,
-      "tls": false,
-      "net": false,
-      "path": false,
-      "zlib": false,
-      "http": false,
-      "https": false,
-      "stream": false,
-      "crypto": false,
-    } 
   },
 
   module: {
@@ -91,9 +80,6 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify(mode),
       },
-    }),
-    new webpack.ProvidePlugin({
-      process: 'process/browser'
     }),
     new HtmlWebpackPlugin({
       favicon: path.join(__dirname, './favicon.png'),
