@@ -10,7 +10,7 @@ import { exec } from 'child_process';
 
 const fs = syncFs.promises;
 const execPromise = util.promisify(exec);
-dotenv.config({path: ".env.local"})
+// dotenv.config({path: ".env.local"})
 const creds = {
   "type": "service_account",
   "project_id": "charged-kiln-189218",
