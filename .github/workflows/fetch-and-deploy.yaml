@@ -1,8 +1,7 @@
 name: Fetch and deploy updated player stats
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '*/15 * * * *'
+  
 jobs:
   resources:
     name: Fetch stats
