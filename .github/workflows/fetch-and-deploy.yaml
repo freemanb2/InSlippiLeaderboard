@@ -11,6 +11,8 @@ jobs:
       - uses: actions/checkout@v1
 
       - uses: actions/setup-node@v1
+        with:
+          node-version: 18.12.0
 
       - name: Fetch stats
         run: ./cron/run.sh
