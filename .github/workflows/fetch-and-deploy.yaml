@@ -36,5 +36,4 @@ jobs:
       
       - name: Deploy update
         run: |
-          cross-env NODE_ENV=production webpack --progress
-          gh-pages -d dist
+          npm run --prefix "/home/runner/work/InSlippiLeaderboard/InSlippiLeaderboard" deploy
