@@ -4,11 +4,13 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import * as syncFs from 'fs';
 import * as path from 'path';
 import util from 'util';
-import * as settings from '../settings'
-
+import dotenv from 'dotenv';
+import * as settings from '../settings';
 import { exec } from 'child_process';
+
 const fs = syncFs.promises;
 const execPromise = util.promisify(exec);
+dotenv.config({path: ".env.local"})
 const creds = {
   "type": "service_account",
   "project_id": "charged-kiln-189218",
