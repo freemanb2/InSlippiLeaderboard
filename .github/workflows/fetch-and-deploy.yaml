@@ -15,7 +15,9 @@ jobs:
           node-version: 18.12.0
 
       - name: Fetch stats
-        run: ./cron/run.sh
+        run: |
+          yarn
+          ./cron/run.sh
 
       - name: Deploy update
         uses: test-room-7/action-update-file@v1
