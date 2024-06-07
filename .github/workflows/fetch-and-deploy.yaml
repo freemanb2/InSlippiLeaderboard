@@ -24,7 +24,7 @@ jobs:
           yarn
           ./cron/run.sh
 
-      - name: Deploy update
+      - name: Commit update
         uses: test-room-7/action-update-file@v1
         with:
           file-path: |
@@ -32,5 +32,10 @@ jobs:
             ./cron/data/players-old.json
             ./cron/data/timestamp.json
             ./cron/logs/log.txt
-          commit-msg: Deploy updated stats
+          commit-msg: Commit updated stats
           github-token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Deploy update
+        run: |
+          cross-env NODE_ENV=production webpack --progress
+          gh-pages -d dist
