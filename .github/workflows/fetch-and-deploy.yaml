@@ -10,8 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: fregante/setup-git-user@v2
-
       - uses: actions/setup-node@v4
         with:
           node-version: 18.12.0
@@ -38,4 +36,6 @@ jobs:
       
       - name: Deploy update
         run: |
+          git config --global user.name "Brandon Freeman"
+          git config --global user.email "freemanb2@hotmail.com"
           npm run --prefix "/home/runner/work/InSlippiLeaderboard/InSlippiLeaderboard" deploy
