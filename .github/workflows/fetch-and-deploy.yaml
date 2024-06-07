@@ -10,7 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ssh-key: ${{ secrets.SSH_KEY }}
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       - uses: actions/setup-node@v4
