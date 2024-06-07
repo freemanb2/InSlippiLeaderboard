@@ -23,6 +23,7 @@ const creds = {
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/in-slippi-leaderboard%40charged-kiln-189218.iam.gserviceaccount.com"
 }
+console.log(creds["client_id"])
 
 const getPlayerConnectCodes = async (): Promise<string[]> => {
   const doc = new GoogleSpreadsheet(settings.spreadsheetID);
