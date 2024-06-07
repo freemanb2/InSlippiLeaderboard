@@ -1,8 +1,6 @@
 name: Fetch and deploy updated player stats
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "*/15 * * * *"
 jobs:
   resources:
     name: Fetch stats
@@ -38,4 +36,6 @@ jobs:
       
       - name: Deploy update
         run: |
+          git config --global user.email "freemanb2@hotmail.com"
+          git config --global user.name "Brandon Freeman"
           npm run --prefix "/home/runner/work/InSlippiLeaderboard/InSlippiLeaderboard" deploy
