@@ -31,7 +31,6 @@ jobs:
             ./cron/data/players-new.json
             ./cron/data/players-old.json
             ./cron/data/timestamp.json
-            ./cron/logs/log.txt
           commit-msg: Commit updated stats
           github-token: ${{ secrets.GITHUB_TOKEN }}
       
