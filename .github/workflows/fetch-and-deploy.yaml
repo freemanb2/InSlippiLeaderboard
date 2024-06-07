@@ -8,9 +8,9 @@ jobs:
     name: Fetch stats
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.12.0
 
@@ -21,6 +21,7 @@ jobs:
           GOOGLE_PRIVATE_KEY_ID: ${{ secrets.GOOGLE.PRIVATE_KEY_ID }}
           GOOGLE_PRIVATE_KEY: ${{ secrets.GOOGLE_PRIVATE_KEY }}
         run: |
+          echo $GOOGLE_CLIENT_ID
           yarn
           ./cron/run.sh
 
