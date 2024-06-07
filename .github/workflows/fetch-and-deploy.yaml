@@ -18,7 +18,10 @@ jobs:
       - name: Deploy update
         uses: test-room-7/action-update-file@v1
         with:
-          file-path: ./cron/data/players-new.json
-          file-path: ./cron/data/players-old.json
-          file-path: ./cron/data/timestamp.json
-          file-path: ./cron/logs/log.txt
+          file-path: |
+            ./cron/data/players-new.json
+            ./cron/data/players-old.json
+            ./cron/data/timestamp.json
+            ./cron/logs/log.txt
+          commit-msg: Deploy updated stats
+          github-token: ${{ secrets.GITHUB_TOKEN }}
