@@ -1,0 +1,23 @@
+name: Fetch and deploy updated player stats
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+jobs:
+  resources:
+    name: Fetch stats
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: actions/setup-node@v1
+
+      - name: Fetch stats
+        run: ./cron/run.sh
+
+      - name: Deploy update
+        uses: test-room-7/action-update-file@v1
+        with:
+          file-path: ./cron/data/players-new.json
+          file-path: ./cron/data/players-old.json
+          file-path: ./cron/data/timestamp.json
+          file-path: ./cron/logs/log.txt
