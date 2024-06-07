@@ -7,11 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        env:
-          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         uses: actions/checkout@v4
         with:
-          repository: https://$GH_TOKEN@github.com/freemanb2/InSlippiLeaderboard.git
+          repository: https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/freemanb2/InSlippiLeaderboard.git
 
       - uses: actions/setup-node@v4
         with:
