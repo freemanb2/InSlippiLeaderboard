@@ -12,7 +12,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ssh-key: ${{ secrets.SSH_KEY }}
-          ssh-user: freemanb2
+          ssh-user: freemanb2@hotmail.com
 
       - uses: actions/setup-node@v4
         with:
