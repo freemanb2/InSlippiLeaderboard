@@ -28,9 +28,9 @@ jobs:
         uses: test-room-7/action-update-file@v1
         with:
           file-path: |
-            ./cron/data/players-new.json
-            ./cron/data/players-old.json
-            ./cron/data/timestamp.json
+            cron/data/players-new.json
+            cron/data/players-old.json
+            cron/data/timestamp.json
           commit-msg: Commit updated stats
           github-token: ${{ secrets.GITHUB_TOKEN }}
       
