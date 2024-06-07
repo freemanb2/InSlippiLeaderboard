@@ -8,8 +8,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          repository: https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/freemanb2/InSlippiLeaderboard.git
 
       - uses: actions/setup-node@v4
         with:
@@ -36,6 +34,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Deploy update
+        env: 
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           git config --global user.email "freemanb2@hotmail.com"
           git config --global user.name "Brandon Freeman"
