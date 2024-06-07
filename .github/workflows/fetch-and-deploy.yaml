@@ -1,6 +1,8 @@
 name: Fetch and deploy updated player stats
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
 jobs:
   resources:
     name: Fetch stats
@@ -34,7 +36,5 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Deploy update
-        env: 
-          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           npm run deploy -- --repo 'https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/freemanb2/InSlippiLeaderboard.git' --user 'Brandon Freeman <freemanb2@hotmail.com>'
