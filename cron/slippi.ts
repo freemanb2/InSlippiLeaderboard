@@ -37,7 +37,7 @@ export const getPlayerData = async (connectCode: string) => {
           }
   }`;
 
-  const req = await fetch('https://gql-gateway-dot-slippi.uc.r.appspot.com/graphql', {
+  const req = await fetch('https://gql-gateway-2-dot-slippi.uc.r.appspot.com/graphql', {
     headers: {
       'content-type': 'application/json',
     },
