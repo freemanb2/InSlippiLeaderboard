@@ -46,7 +46,7 @@ export const getPlayerData = async (connectCode: string) => {
     body: JSON.stringify({
       operationName: 'UserProfilePageQuery',
       query,
-      variables: { cc: connectCode },
+      variables: { cc: connectCode, uid: connectCode },
     }),
     method: 'POST',
   });
