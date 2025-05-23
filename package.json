@@ -28,7 +28,7 @@
     "css-loader": "^6.7.3",
     "dayjs": "^1.11.7",
     "dotenv": "^16.4.5",
-    "google-spreadsheet": "^4.1.4",
+    "google-spreadsheet": "^3.3.0",
     "limiter": "^2.1.0",
     "null-loader": "^4.0.1",
     "open-color": "^1.8.0",
@@ -47,7 +47,7 @@
     "sass-loader": "10",
     "stream-http": "^3.2.0",
     "style-loader": "^3.3.1",
-    "tabletop": "^1.6.2",
+    "tabletop": "^1.6.3",
     "tailwindcss": "^3.2.4",
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
@@ -74,8 +74,8 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "file-loader": "^6.2.0",
-    "gh-pages": "^6.3.0",
-    "git-repo-name": "^0.2.0",
+    "gh-pages": "^3.2.3",
+    "git-repo-name": "^1.0.1",
     "html-webpack-plugin": "^5",
     "identity-obj-proxy": "^3.0.0",
     "open-browser-webpack-plugin": "^0.0.5",
@@ -87,6 +87,6 @@
     "util": "^0.12.5",
     "webpack": "^5",
     "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^5.2.1"
+    "webpack-dev-server": "^3.11.2"
   }
 }

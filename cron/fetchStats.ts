@@ -43,9 +43,8 @@ const getPlayers = async () => {
   const validResults = results.filter(result => !(result instanceof Error));
   console.log('valid results', validResults);
   const unsortedPlayers = validResults
-    .filter((data: any) => data?.data?.getUser)
-    .map((data: any) => data.data.getUser);
-  console.log('unsortedPlayers', unsortedPlayers);
+    .filter((data: any) => data?.data?.getConnectCode?.user)
+    .map((data: any) => data.data.getConnectCode.user);
   return unsortedPlayers.sort((p1, p2) =>
     p2.rankedNetplayProfile.ratingOrdinal - p1.rankedNetplayProfile.ratingOrdinal)
 }
@@ -53,7 +52,6 @@ const getPlayers = async () => {
 async function main() {
   console.log('Starting player fetch.');
   const players = await getPlayers();
-  console.log('players', players);
   if(!players.length) {
     console.log('Error fetching player data. Terminating.')
     return
