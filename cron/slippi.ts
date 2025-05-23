@@ -1,6 +1,7 @@
 import { RateLimiter } from "limiter"
 
 export const getPlayerData = async (connectCode: string) => {
+  console.log('getting player data for ', connectCode);
   const query = `fragment profileFields on NetplayProfile {
     id
     ratingOrdinal
